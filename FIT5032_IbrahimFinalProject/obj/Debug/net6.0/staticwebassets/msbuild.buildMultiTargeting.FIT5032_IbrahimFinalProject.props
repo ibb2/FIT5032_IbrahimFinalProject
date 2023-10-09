@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\FIT5032_IbrahimFinalProject.props" />
+</Project>

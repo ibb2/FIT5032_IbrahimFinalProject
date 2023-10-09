@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\FIT5032_IbrahimFinalProject.props" />
+</Project>
