@@ -17,6 +17,8 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             var roles = _roleManager.Roles.ToList();
             return View(roles);
         }
+
+        [ValidateAntiForgeryToken]
         public IActionResult Create() { 
             return View(new IdentityRole()); 
         }
