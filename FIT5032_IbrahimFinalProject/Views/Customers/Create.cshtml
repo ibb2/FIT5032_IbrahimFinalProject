@@ -1,5 +1,10 @@
 ﻿@model FIT5032_IbrahimFinalProject.Models.Customer
 
+@using (Html.BeginForm("Create", "Customers"))
+{
+    @Html.AntiForgeryToken()
+}
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -10,7 +15,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-controller="Customers">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>

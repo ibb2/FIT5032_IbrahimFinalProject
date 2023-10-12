@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FIT5032_IbrahimFinalProject.Data;
 using FIT5032_IbrahimFinalProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FIT5032_IbrahimFinalProject.Controllers
 {
@@ -54,16 +55,30 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
         {
-            if (ModelState.IsValid)
+
+            var emptyCustomer = new Customer();
+
+            if (await TryUpdateModelAsync<Customer>(
+                emptyCustomer,
+                "customer",   // Prefix for form value.
+                c => c.FirstName, c => c.LastName, c => c.BookingDate))
             {
-                _context.Add(customer);
+                _context.Customers.Add(emptyCustomer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(customer);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
             return View(customer);
         }
 
@@ -119,6 +134,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Customers/Delete/5
+        [Authorize(Roles = "Staff, Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Customers == null)
