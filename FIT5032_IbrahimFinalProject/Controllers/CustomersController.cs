@@ -55,13 +55,13 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
         {
 
             var emptyCustomer = new Customer();
+            Console.WriteLine(ModelState);
 
             if (await TryUpdateModelAsync<Customer>(
                 emptyCustomer,
@@ -72,6 +72,8 @@ namespace FIT5032_IbrahimFinalProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            Console.WriteLine(ModelState);
 
             //if (ModelState.IsValid)
             //{
