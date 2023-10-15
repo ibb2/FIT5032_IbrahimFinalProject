@@ -23,14 +23,23 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Customers
+        [Authorize(Roles = "Users, Staff, Admin")]
         public async Task<IActionResult> Index()
 
         {
-            string currentUserId = User.Identity.GetUserId();
-            return _context.Customers != null ?
-                        View(await _context.Customers.Where(
-                            u => u.UserId == currentUserId).ToListAsync()) :
-                        Problem("Entity set 'ClinicContext.Customers'  is null.");
+            if (User.IsInRole("Users"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                return _context.Customers != null ?
+                            View(await _context.Customers.Where(
+                                u => u.UserId == currentUserId).ToListAsync()) :
+                            Problem("Entity set 'ClinicContext.Customers'  is null.");
+            } else
+            {
+                return _context.Customers != null ?
+                            View(await _context.Customers.ToListAsync()) :
+                            Problem("Entity set 'ClinicContext.Customers'  is null.");
+            }
             //return _context.Customers != null ?
             //            View(await _context.Customers.ToListAsync()) :
             //            Problem("Entity set 'ClinicContext.Customers'  is null.");
