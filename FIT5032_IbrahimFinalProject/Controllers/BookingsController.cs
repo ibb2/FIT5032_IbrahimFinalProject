@@ -22,10 +22,23 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Bookings
+        [Authorize(Roles = "Users, Staff, Admin")]
         public async Task<IActionResult> Index()
         {
-            var clinicContext = _context.Bookings.Include(b => b.Customer);
-            return View(await clinicContext.ToListAsync());
+            if (User.IsInRole("Users"))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                var currentCustomer = _context.Customers.FirstOrDefault(c => c.UserId == currentUserId);
+
+                var clinicContext = _context.Bookings.Where(b => b.Customer == currentCustomer).Include(b => b.Customer);
+                return View(await clinicContext.ToListAsync());
+            }
+            else
+            {
+                var clinicContext = _context.Bookings.Include(b => b.Customer);
+                return View(await clinicContext.ToListAsync());
+            }
+
         }
 
         // GET: Bookings/Details/5
