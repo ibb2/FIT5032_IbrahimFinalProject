@@ -11,6 +11,6 @@
         public DateTime BookingDate { get; set; }
 
 
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }

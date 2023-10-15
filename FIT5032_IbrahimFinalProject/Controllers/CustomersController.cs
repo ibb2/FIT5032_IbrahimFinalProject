@@ -69,7 +69,6 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         public async Task<IActionResult> Create([Bind("Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
         {
 
-            ModelState.Remove("Bookings");
             var emptyCustomer = new Customer();
             Console.WriteLine(ModelState);
 
