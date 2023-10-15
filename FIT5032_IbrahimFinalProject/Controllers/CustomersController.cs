@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FIT5032_IbrahimFinalProject.Data;
 using FIT5032_IbrahimFinalProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity;
 
 namespace FIT5032_IbrahimFinalProject.Controllers
 {
@@ -15,17 +17,20 @@ namespace FIT5032_IbrahimFinalProject.Controllers
     {
         private readonly ClinicContext _context;
 
-        public CustomersController(ClinicContext context)
+        public CustomersController(ClinicContext context )
         {
             _context = context;
         }
 
         // GET: Customers
         public async Task<IActionResult> Index()
+
         {
-              return _context.Customers != null ? 
-                          View(await _context.Customers.ToListAsync()) :
-                          Problem("Entity set 'ClinicContext.Customers'  is null.");
+            string currentUserId = User.Identity.GetUserName();
+            return _context.Customers != null ?
+                        View(await _context.Customers.Where(
+                            u=> u.FirstName == currentUserId).ToListAsync()) :
+                        Problem("Entity set 'ClinicContext.Customers'  is null.");
         }
 
         // GET: Customers/Details/5

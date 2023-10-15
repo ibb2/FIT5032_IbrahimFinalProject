@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FIT5032_IbrahimFinalProject.Data;
 using FIT5032_IbrahimFinalProject.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FIT5032_IbrahimFinalProject.Controllers
 {
