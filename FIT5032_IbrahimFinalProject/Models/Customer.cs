@@ -15,8 +15,10 @@ namespace FIT5032_IbrahimFinalProject.Models
         [DataType(DataType.Date)]
         public string DOB { get; set; }
         [Required]
+        [StringLength(50)]
         public string FirstName { get; set; }
         [Required]
+        [StringLength(100)]
         public string LastName { get; set; }
         public DateTime BookingDate { get; set; }
 
