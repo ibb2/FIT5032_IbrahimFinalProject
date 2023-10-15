@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FIT5032_IbrahimFinalProject.Data;
 using FIT5032_IbrahimFinalProject.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FIT5032_IbrahimFinalProject.Controllers
 {
@@ -58,10 +59,18 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,BookingDate")] Booking booking)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("ID, CustomerID, BookingDate")] Booking booking)
         {
+
+            var currentCustomer = _context.Customers.FirstOrDefault(u => u.UserId == User.Identity.GetUserId());
+            ModelState.Clear();
+            TryValidateModel(booking);
+
             if (ModelState.IsValid)
             {
+                booking.Customer = currentCustomer;
+                booking.CustomerID = currentCustomer.ID;
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
