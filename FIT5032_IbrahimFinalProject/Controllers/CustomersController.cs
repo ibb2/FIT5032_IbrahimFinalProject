@@ -26,14 +26,14 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         public async Task<IActionResult> Index()
 
         {
-            string currentUserId = User.Identity.GetUserName();
-            //return _context.Customers != null ?
-            //            View(await _context.Customers.Where(
-            //                u=> u.FirstName == currentUserId).ToListAsync()) :
-            //            Problem("Entity set 'ClinicContext.Customers'  is null.");
+            string currentUserId = User.Identity.GetUserId();
             return _context.Customers != null ?
-                        View(await _context.Customers.ToListAsync()) :
+                        View(await _context.Customers.Where(
+                            u => u.UserId == currentUserId).ToListAsync()) :
                         Problem("Entity set 'ClinicContext.Customers'  is null.");
+            //return _context.Customers != null ?
+            //            View(await _context.Customers.ToListAsync()) :
+            //            Problem("Entity set 'ClinicContext.Customers'  is null.");
         }
 
         // GET: Customers/Details/5
@@ -66,26 +66,12 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         //[Authorize(Roles = "Customer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
+        public async Task<IActionResult> Create([Bind("UserId,Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
         {
-
-            var emptyCustomer = new Customer();
-            Console.WriteLine(ModelState);
-
-            //if (await TryUpdateModelAsync<Customer>(
-            //    emptyCustomer,
-            //    "customer",   // Prefix for form value.
-            //    c => c.FirstName, c => c.LastName, c => c.BookingDate))
-            //{
-            //    _context.Customers.Add(emptyCustomer);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-
-            Console.WriteLine(ModelState);
 
             if (ModelState.IsValid)
             {
+                customer.UserId = User.Identity.GetUserId();
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -3,6 +3,7 @@
     public class Customer
     {
         public int ID { get; set; }
+        public string? UserId { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string DOB { get; set; }
