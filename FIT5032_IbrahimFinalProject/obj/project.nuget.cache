@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kUY7XHGXFY6SnAdtkaM1U/FHQyUeNncBq37t/woSY52bOjtHT44UixH9SwL9PzhxZm5kq3vXbL8JkhpgiHsUKQ==",
+  "dgSpecHash": "3Gd2Zj0iwIpHMYtYXXMlK8bxJmh4QU+udAFM6fF1vqMmGeYP2hhzSrG6mNX65hrZLCNBi+jRw7eYD/5V0Xfn8g==",
   "success": true,
   "projectFilePath": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj",
   "expectedPackageFiles": [
@@ -54,6 +54,8 @@
     "C:\\Users\\ibyst\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\ibyst\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\ibyst\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\ibyst\\.nuget\\packages\\jquery\\1.7.0\\jquery.1.7.0.nupkg.sha512",
+    "C:\\Users\\ibyst\\.nuget\\packages\\jquery.datatables\\1.10.15\\jquery.datatables.1.10.15.nupkg.sha512",
     "C:\\Users\\ibyst\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\ibyst\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\ibyst\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

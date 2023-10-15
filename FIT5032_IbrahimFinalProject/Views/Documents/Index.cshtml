@@ -10,7 +10,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
+@*     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Path)
@@ -20,14 +20,13 @@
             </th>
             <th></th>
         </tr>
-    </thead>
+    </thead> *@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-                <td>
-                    <img class="img-thumbnail" src="@url.Content("~/Uploads/", item.Path)"
-                    >
-                </td>
+              @*   <td>
+                    <img class="img-thumbnail" src="@url.Content("~/Uploads/", item.Path)" />
+                </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
