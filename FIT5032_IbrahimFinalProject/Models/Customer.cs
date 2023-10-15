@@ -5,12 +5,14 @@ namespace FIT5032_IbrahimFinalProject.Models
     public class Customer
     {
         public int ID { get; set; }
+        [Required]
         public string? UserId { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [StringLength(12)]
         public string PhoneNo { get; set; }
-
         [Required]
         [DataType(DataType.Date)]
         public string DOB { get; set; }
@@ -20,8 +22,6 @@ namespace FIT5032_IbrahimFinalProject.Models
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
-        public DateTime BookingDate { get; set; }
-
 
         public ICollection<Booking>? Bookings { get; set; }
     }

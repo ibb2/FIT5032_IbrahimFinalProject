@@ -10,6 +10,6 @@ namespace FIT5032_IbrahimFinalProject.Models
         public int CustomerID { get; set; }
         [Required]
         public DateTime BookingDate { get; set; }
-        public Customer? Customer { get; set; }
+        public Customer Customer { get; set; }
     }
 }
