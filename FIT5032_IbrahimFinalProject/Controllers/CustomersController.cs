@@ -27,9 +27,12 @@ namespace FIT5032_IbrahimFinalProject.Controllers
 
         {
             string currentUserId = User.Identity.GetUserName();
+            //return _context.Customers != null ?
+            //            View(await _context.Customers.Where(
+            //                u=> u.FirstName == currentUserId).ToListAsync()) :
+            //            Problem("Entity set 'ClinicContext.Customers'  is null.");
             return _context.Customers != null ?
-                        View(await _context.Customers.Where(
-                            u=> u.FirstName == currentUserId).ToListAsync()) :
+                        View(await _context.Customers.ToListAsync()) :
                         Problem("Entity set 'ClinicContext.Customers'  is null.");
         }
 
@@ -62,30 +65,32 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[Authorize(Roles = "Customer")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
         {
 
+            ModelState.Remove("Bookings");
             var emptyCustomer = new Customer();
             Console.WriteLine(ModelState);
 
-            if (await TryUpdateModelAsync<Customer>(
-                emptyCustomer,
-                "customer",   // Prefix for form value.
-                c => c.FirstName, c => c.LastName, c => c.BookingDate))
-            {
-                _context.Customers.Add(emptyCustomer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            Console.WriteLine(ModelState);
-
-            //if (ModelState.IsValid)
+            //if (await TryUpdateModelAsync<Customer>(
+            //    emptyCustomer,
+            //    "customer",   // Prefix for form value.
+            //    c => c.FirstName, c => c.LastName, c => c.BookingDate))
             //{
-            //    _context.Add(customer);
+            //    _context.Customers.Add(emptyCustomer);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
             //}
+
+            Console.WriteLine(ModelState);
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(customer);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
             return View(customer);
         }
 
