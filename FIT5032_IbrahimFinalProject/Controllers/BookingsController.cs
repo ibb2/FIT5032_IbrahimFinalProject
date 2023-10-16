@@ -83,6 +83,8 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         {
 
             var currentCustomer = _context.Customers.FirstOrDefault(u => u.UserId == User.Identity.GetUserId());
+            booking.Customer = currentCustomer;
+            booking.CustomerID = currentCustomer.ID;
             ModelState.Clear();
             TryValidateModel(booking);
 

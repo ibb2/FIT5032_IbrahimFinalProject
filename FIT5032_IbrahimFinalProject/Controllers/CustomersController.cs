@@ -23,7 +23,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Customers
-        [Authorize(Roles = "Users, Staff, Admin")]
+        [Authorize]
         public async Task<IActionResult> Index()
 
         {
@@ -72,15 +72,16 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Authorize(Roles = "Customer")]
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,Email,PhoneNo,DOB,FirstName,LastName")] Customer customer)
         {
-
+            ModelState.Clear();
+            customer.UserId = User.Identity.GetUserId();
+            TryValidateModel(customer);
             if (ModelState.IsValid)
             {
-                customer.UserId = User.Identity.GetUserId();
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -159,6 +160,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // POST: Customers/Delete/5
+        [Authorize(Roles = "Staff, Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

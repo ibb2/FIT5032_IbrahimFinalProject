@@ -28,7 +28,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">Role</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                        @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
