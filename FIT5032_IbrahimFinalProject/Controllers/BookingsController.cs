@@ -22,7 +22,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Bookings
-        [Authorize(Roles = "Users, Staff, Admin")]
+
         public async Task<IActionResult> Index()
         {
             if (User.IsInRole("Users"))
@@ -33,15 +33,20 @@ namespace FIT5032_IbrahimFinalProject.Controllers
                 var clinicContext = _context.Bookings.Where(b => b.Customer == currentCustomer).Include(b => b.Customer);
                 return View(await clinicContext.ToListAsync());
             }
-            else
+            else if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
                 var clinicContext = _context.Bookings.Include(b => b.Customer);
+                return View(await clinicContext.ToListAsync());
+            } else
+            {
+                var clinicContext = _context.Bookings;
                 return View(await clinicContext.ToListAsync());
             }
 
         }
 
         // GET: Bookings/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Bookings == null)
@@ -61,6 +66,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Bookings/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "ID");
@@ -93,6 +99,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Bookings/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Bookings == null)
@@ -114,6 +121,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ID,CustomerID,BookingDate")] Booking booking)
         {
             if (id != booking.ID)
@@ -146,6 +154,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         }
 
         // GET: Bookings/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Bookings == null)
@@ -167,6 +176,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Bookings == null)
@@ -183,6 +193,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool BookingExists(int id)
         {
           return (_context.Bookings?.Any(e => e.ID == id)).GetValueOrDefault();

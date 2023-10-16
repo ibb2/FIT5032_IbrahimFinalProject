@@ -15,29 +15,41 @@
             <th>
                 @Html.DisplayNameFor(model => model.BookingDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th></th>
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>Create, edit, delete</th>
+            }
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.ID)
+                    </td>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
 
