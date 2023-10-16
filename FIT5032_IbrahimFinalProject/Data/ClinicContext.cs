@@ -16,6 +16,7 @@ namespace FIT5032_IbrahimFinalProject.Data
 
         public DbSet<Customer> Customers { get; set; } = default!;
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
