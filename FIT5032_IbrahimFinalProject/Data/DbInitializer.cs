@@ -26,7 +26,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "john.doe@example.com",
                     PhoneNo = "123-456-7890",
                     DOB = "1990-01-01",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -35,7 +34,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "alice.smith@example.com",
                     PhoneNo = "555-123-4567",
                     DOB = "1985-03-15",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -44,7 +42,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "bob.johnson@example.com",
                     PhoneNo = "222-333-4444",
                     DOB = "1978-08-20",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -53,7 +50,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "sarah.wilson@example.com",
                     PhoneNo = "777-888-9999",
                     DOB = "1995-12-10",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -62,7 +58,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "michael.brown@example.com",
                     PhoneNo = "555-666-7777",
                     DOB = "1980-04-05",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -71,7 +66,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "emma.davis@example.com",
                     PhoneNo = "999-888-7777",
                     DOB = "1992-06-28",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -80,7 +74,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "daniel.lee@example.com",
                     PhoneNo = "111-222-3333",
                     DOB = "1987-02-14",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -89,7 +82,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "olivia.white@example.com",
                     PhoneNo = "333-444-5555",
                     DOB = "1989-11-03",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -98,7 +90,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "william.harris@example.com",
                     PhoneNo = "666-777-8888",
                     DOB = "1982-09-18",
-                    BookingDate = DateTime.Now
                 },
                 new Customer
                 {
@@ -107,7 +98,6 @@ namespace FIT5032_IbrahimFinalProject.Data
                     Email = "ava.jackson@example.com",
                     PhoneNo = "444-555-6666",
                     DOB = "1997-07-22",
-                    BookingDate = DateTime.Now
                 }
             };
 

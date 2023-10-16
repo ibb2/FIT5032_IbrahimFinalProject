@@ -44,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ClinicContext>();
         context.Database.EnsureCreated();
-        DbInitializer.Initialize(context);
+        //DbInitializer.Initialize(context);
     }
     catch (Exception ex)
     {

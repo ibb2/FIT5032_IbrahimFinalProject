@@ -75,7 +75,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         //[Authorize(Roles = "Customer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
+        public async Task<IActionResult> Create([Bind("UserId,Email,PhoneNo,DOB,FirstName,LastName")] Customer customer)
         {
 
             if (ModelState.IsValid)
@@ -109,7 +109,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,PhoneNo,DOB,FirstName,LastName,BookingDate")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,PhoneNo,DOB,FirstName,LastName")] Customer customer)
         {
             if (id != customer.ID)
             {
