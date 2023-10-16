@@ -12,6 +12,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         public RoleController(RoleManager<IdentityRole> roleManager) { 
             this._roleManager = roleManager;
         }
+
         public IActionResult Index()
         {
             var roles = _roleManager.Roles.ToList();
