@@ -82,20 +82,28 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         public async Task<IActionResult> Create([Bind("ID, CustomerID, BookingDate")] Booking booking)
         {
 
-            var currentCustomer = _context.Customers.FirstOrDefault(u => u.UserId == User.Identity.GetUserId());
-            booking.Customer = currentCustomer;
-            booking.CustomerID = currentCustomer.ID;
-            ModelState.Clear();
-            TryValidateModel(booking);
+            // Check if BookingDate is already in the database. If it is fail, else progress
+            var bookingAlreadyExists = _context.Bookings.Where(b => b.BookingDate == booking.BookingDate).Count();
 
-            if (ModelState.IsValid)
+            if (bookingAlreadyExists == 0)
             {
+                // Clearing booking state and adding customer info for ModelState validation to pass 
+                // and for data to be persisted
+                var currentCustomer = _context.Customers.FirstOrDefault(u => u.UserId == User.Identity.GetUserId());
                 booking.Customer = currentCustomer;
                 booking.CustomerID = currentCustomer.ID;
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+                ModelState.Clear();
+                TryValidateModel(booking);
+
+                if (ModelState.IsValid)
+                {
+                    booking.Customer = currentCustomer;
+                    booking.CustomerID = currentCustomer.ID;
+                    _context.Add(booking);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            } 
             ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "ID", booking.CustomerID);
             return View(booking);
         }
