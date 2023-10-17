@@ -103,7 +103,13 @@ namespace FIT5032_IbrahimFinalProject.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-            } 
+                ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "ID", booking.CustomerID);
+                return View(booking);
+            } else
+            {
+                ModelState.AddModelError(nameof(Booking.BookingDate),
+                             "Booking not avilable");
+            }
             ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "ID", booking.CustomerID);
             return View(booking);
         }
