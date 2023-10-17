@@ -11,7 +11,7 @@ namespace FIT5032_IbrahimFinalProject.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [StringLength(12)]
+        [Phone]
         public string PhoneNo { get; set; }
         [Required]
         [DataType(DataType.Date)]
