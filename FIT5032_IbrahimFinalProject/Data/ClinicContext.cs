@@ -25,5 +25,7 @@ namespace FIT5032_IbrahimFinalProject.Data
         }
 
         public DbSet<FIT5032_IbrahimFinalProject.Models.Documents>? Documents { get; set; }
+
+        public DbSet<FIT5032_IbrahimFinalProject.Models.Email>? Email { get; set; }
     }
 }
