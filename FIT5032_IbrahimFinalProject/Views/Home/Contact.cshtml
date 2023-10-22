@@ -11,7 +11,7 @@
     <p>Feel free to shoot us a message.</p>
     <div class="container">
         <form asp-action="Create" asp-controller="Home">
-            @Html.AntiForgeryToken
+            @Html.AntiForgeryToken()
 @*             <div class="form-group">
                 <label asp-for="From" class="control-label"></label>
                 <input asp-for="From" class="form-control" />
