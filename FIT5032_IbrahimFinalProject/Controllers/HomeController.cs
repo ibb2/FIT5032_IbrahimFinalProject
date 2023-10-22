@@ -26,6 +26,12 @@ namespace FIT5032_IbrahimFinalProject.Controllers
 
         public IActionResult Index()
         {
+
+            if (TempData["UserExists"] != null)
+            {
+                ViewData["UserExists"] = TempData["UserExists"];
+            }
+
             if (_context.Ratings.Select(r => r.RatingScore).Any())
             {
                 double aggregateRating = _context.Ratings.Select(r => r.RatingScore).Average();

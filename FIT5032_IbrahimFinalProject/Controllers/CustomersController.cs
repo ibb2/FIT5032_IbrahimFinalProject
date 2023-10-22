@@ -66,6 +66,13 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            Boolean doesUserAlreadyHaveCustomer = _context.Customers.Where(c => c.UserId == User.Identity.GetUserId()).Count() > 0;
+
+            if (doesUserAlreadyHaveCustomer)
+            {
+                TempData["UserExists"] = "A Customer with your user already exists.";
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

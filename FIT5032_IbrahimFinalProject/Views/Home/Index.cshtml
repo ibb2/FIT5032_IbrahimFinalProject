@@ -4,7 +4,16 @@
     ViewData["Title"] = "uMRI";
 }
 
+@* Code adapted from https://stackoverflow.com/questions/63841739/how-to-display-the-alert-message-and-redirect-to-home-page-in-asp-net*@
+@if (ViewData["UserExists"] != null)
+{
+    <div class="alert justify-content-between alert-warning alert-dismissible fade show" role="alert">
+        You have already created a customer.
+    </div>
+}
+
 <div class="container-fluid text-center">
+
     <div class="row g-5 row-cols-sm-1 justify-content-sm-center text-center">
         <div class="col-sm-9">
             @* References from https://pngtree.com/freebackground/ct-or-mri-diagnosis-in-clinic-flat-banner-template-hospital-human-brain-body-scan-machine-for-patient-vector-male-doctor-research-man-on-computer-female-nurse-configures-scanner-illustration_1774597.html*@
@@ -43,5 +52,6 @@
         <input type="hidden" id="bookings" value="@Model" />
     </div>
 </div>
+
 
 
