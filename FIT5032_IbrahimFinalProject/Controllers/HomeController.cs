@@ -29,6 +29,8 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             if (_context.Ratings.Select(r => r.RatingScore).Any())
             {
                 double aggregateRating = _context.Ratings.Select(r => r.RatingScore).Average();
+                int count = _context.Ratings.Select(r => r.RatingScore).Count();
+                ViewData["TotalReviews"] = count;
                 ViewData["AggregateRating"] = aggregateRating;
             }
             return View();
