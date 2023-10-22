@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<FIT5032_IbrahimFinalProject.Models.Booking>
+
+@{
     ViewData["Title"] = "uMRI";
 }
 
@@ -17,7 +19,8 @@
                 {
                     <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
                     <a class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
-                } else
+                }
+                else
                 {
                     <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Go to my Profile</a>
                 }
@@ -32,9 +35,12 @@
                         us. We keep striving to improve the experience for everyone. Because this when you benefit we all benefit.
                     </p>
                 </div>
-                <div class="text-center"><p>@(ViewData["AgggregateRating"] != null ? @ViewData["AggreateRating"] : 0) / 5</p></div>
+                <div class="text-center fs-1">
+                    <p class="text-center">@(ViewData["AgggregateRating"] != null ? @ViewData["AggreateRating"] : 0) / 5</p>
+                </div>
             </div>
         </div>
+        <input type="hidden" id="bookings" value="@Model" />
     </div>
 </div>
 
