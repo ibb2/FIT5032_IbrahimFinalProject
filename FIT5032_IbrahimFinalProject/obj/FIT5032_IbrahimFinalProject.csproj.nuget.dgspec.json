@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj": {}
+    "C:\\Users\\ibyst\\Downloads\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj": {}
   },
   "projects": {
-    "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj": {
+    "C:\\Users\\ibyst\\Downloads\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj",
+        "projectUniqueName": "C:\\Users\\ibyst\\Downloads\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj",
         "projectName": "FIT5032_IbrahimFinalProject",
-        "projectPath": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj",
+        "projectPath": "C:\\Users\\ibyst\\Downloads\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject.csproj",
         "packagesPath": "C:\\Users\\ibyst\\.nuget\\packages\\",
-        "outputPath": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\obj\\",
+        "outputPath": "C:\\Users\\ibyst\\Downloads\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ibyst\\AppData\\Roaming\\NuGet\\NuGet.Config",
