@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TNfUoJ+Xj4P46uvAodd0S7GV4SrNQw2OIXaoX1FRfB0=",
+  "Hash": "a9N4vZTKMebteiTOxj9SRrvyiCsMnrhzNZrzcuYW2M4=",
   "Source": "FIT5032_IbrahimFinalProject",
   "BasePath": "_content/FIT5032_IbrahimFinalProject",
   "Mode": "Default",
@@ -2123,6 +2123,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\1d3c575b-5be6-4528-9eda-8493b914fd36.pdf"
+    },
+    {
+      "Identity": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\wwwroot\\uploads\\d5e024f8-7060-4b4e-a888-fc3fa4e6b60f.pdf",
+      "SourceId": "FIT5032_IbrahimFinalProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source\\Repos\\FIT5032_IbrahimFinalProject\\FIT5032_IbrahimFinalProject\\wwwroot\\",
+      "BasePath": "_content/FIT5032_IbrahimFinalProject",
+      "RelativePath": "uploads/d5e024f8-7060-4b4e-a888-fc3fa4e6b60f.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\d5e024f8-7060-4b4e-a888-fc3fa4e6b60f.pdf"
     }
   ]
 }

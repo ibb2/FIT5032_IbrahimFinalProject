@@ -77,14 +77,24 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,Email,PhoneNo,DOB,FirstName,LastName")] Customer customer)
         {
-            ModelState.Clear();
-            customer.UserId = User.Identity.GetUserId();
-            TryValidateModel(customer);
-            if (ModelState.IsValid)
+
+            Boolean doesUserAlreadyHaveCustomer = _context.Customers.Where(c => c.UserId == User.Identity.GetUserId()).Count() > 0;
+
+            if (!doesUserAlreadyHaveCustomer)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.Clear();
+                customer.UserId = User.Identity.GetUserId();
+                TryValidateModel(customer);
+                if (ModelState.IsValid)
+                {
+                    _context.Add(customer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            } else
+            {
+                ModelState.AddModelError("UserId", "A customer with your user already exists.");
+                ViewData["UserExists"] = "A Customer with your user already exists.";
             }
             return View(customer);
         }
