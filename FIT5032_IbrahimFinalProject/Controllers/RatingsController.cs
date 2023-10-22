@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FIT5032_IbrahimFinalProject.Data;
 using FIT5032_IbrahimFinalProject.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FIT5032_IbrahimFinalProject.Controllers
 {
@@ -59,6 +61,11 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,CustomerID,StaffID,RatingScore,Message,Reply,Location")] Rating rating)
         {
+            ModelState.Clear();
+
+            var customer = _context.Customers.FirstOrDefault(c => c.UserId == User.Identity.GetUserId());
+            rating.CustomerID = customer.ID;
+
             if (ModelState.IsValid)
             {
                 _context.Add(rating);
@@ -72,16 +79,23 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         // GET: Ratings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null || _context.Ratings == null)
             {
                 return NotFound();
             }
 
             var rating = await _context.Ratings.FindAsync(id);
+            var customerId = _context.Customers.FirstOrDefault(c => c.UserId == User.Identity.GetUserId()).ID;
+            if (rating.CustomerID != customerId)
+            {
+                ViewData["NotYou"] = "You do not have the right to edit";
+                return RedirectToAction(nameof(Index));
+            }
             if (rating == null)
             {
                 return NotFound();
-            }
+            } 
             ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "DOB", rating.CustomerID);
             return View(rating);
         }
@@ -97,6 +111,11 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             {
                 return NotFound();
             }
+
+            ModelState.Clear();
+
+            var customer = _context.Customers.FirstOrDefault(c => c.UserId == User.Identity.GetUserId());
+            rating.CustomerID = customer.ID;
 
             if (ModelState.IsValid)
             {
@@ -122,6 +141,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             return View(rating);
         }
 
+        [Authorize]
         // GET: Ratings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -133,6 +153,14 @@ namespace FIT5032_IbrahimFinalProject.Controllers
             var rating = await _context.Ratings
                 .Include(r => r.Customer)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            var rate = await _context.Ratings.FindAsync(id);
+            var customerId = _context.Customers.FirstOrDefault(c => c.UserId == User.Identity.GetUserId()).ID;
+            if (rate.CustomerID != customerId)
+            {
+                ViewData["NotYou"] = "You do not have the right to delete";
+                return RedirectToAction(nameof(Index));
+            }
             if (rating == null)
             {
                 return NotFound();
