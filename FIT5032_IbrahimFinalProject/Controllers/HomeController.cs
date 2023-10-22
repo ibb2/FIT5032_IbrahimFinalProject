@@ -27,6 +27,7 @@ namespace FIT5032_IbrahimFinalProject.Controllers
         public IActionResult Index()
         {
 
+            ViewData["TotalReviews"] = 0;
             if (TempData["UserExists"] != null)
             {
                 ViewData["UserExists"] = TempData["UserExists"];
@@ -34,10 +35,21 @@ namespace FIT5032_IbrahimFinalProject.Controllers
 
             if (_context.Ratings.Select(r => r.RatingScore).Any())
             {
-                double aggregateRating = _context.Ratings.Select(r => r.RatingScore).Average();
-                int count = _context.Ratings.Select(r => r.RatingScore).Count();
-                ViewData["TotalReviews"] = count;
-                ViewData["AggregateRating"] = aggregateRating;
+                var rate = _context.Ratings.Select(r => r.RatingScore);
+                if (rate.Count() == 1)
+                {
+                    var singleRate = _context.Ratings.FirstOrDefault();
+                    ViewData["TotalReviews"] = 1;
+                    ViewData["AggregateRating"] = singleRate.RatingScore;
+                } 
+                else
+                {
+                    var rating = _context.Ratings.Select(r => r.RatingScore);
+                    double aggregateRating = rating.Average();
+                    int count = _context.Ratings.Select(r => r.RatingScore).Count();
+                    ViewBag.RatingScore = aggregateRating;
+                    ViewBag.TotalReview = count;
+                }
             }
             return View();
         }
