@@ -5,7 +5,10 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
     <p>A better MRI experience for all of us.</p>
-    <p>Aggregate Rating: @ViewData["AggregateRating"]</p>
+    @if (ViewData["AggregateRating"] != "" || ViewData["AggregateRating"] != null)
+    {
+        <p>Aggregate Rating: @ViewData["AggregateRating"]</p>
+    }
     <div class="container">
         <div class="row flex-nowrap">
             <div class="col">

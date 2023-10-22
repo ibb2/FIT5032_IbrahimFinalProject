@@ -26,8 +26,11 @@ namespace FIT5032_IbrahimFinalProject.Controllers
 
         public IActionResult Index()
         {
-            double aggregateRating = _context.Ratings.Select(r => r.RatingScore).Average();
-            ViewData["AggregateRating"] = aggregateRating;
+            if (_context.Ratings.Select(r => r.RatingScore).Any())
+            {
+                double aggregateRating = _context.Ratings.Select(r => r.RatingScore).Average();
+                ViewData["AggregateRating"] = aggregateRating;
+            }
             return View();
         }
 

@@ -119,7 +119,7 @@ namespace FIT5032_IbrahimFinalProject.Models
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("iibr0003@student.monash.edu", "uMRI Verified Sender"),
+                From = new EmailAddress("ibbs824@gmail.com", "uMRI Verified Sender"),
                 Subject = email.Subject,
                 PlainTextContent = email.Content,
             };
@@ -133,18 +133,18 @@ namespace FIT5032_IbrahimFinalProject.Models
             // This value is hardcoded for the mail address of the clinic.
             // In this case it is just my personal email
             msg.AddReplyTo( new EmailAddress(email.From, User.Identity.Name));
-            msg.AddTo(new EmailAddress("ibbs824@gmail.com", "uMRI Team"));
+            msg.AddTo(new EmailAddress("ibyster824@gmail.com", "uMRI Team"));
             var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
 
             ModelState.Clear();
-            email.To = "ibbs824@gmail.com";
+            email.To = "ibyster824@gmail.com";
 
             if (ModelState.IsValid && response.IsSuccessStatusCode)
             {
                 _context.Add(email);
                 await _context.SaveChangesAsync();
-                return View("Home/Index");
+                return RedirectToAction("Index", "Home");
             }
             return View(email);
         }
