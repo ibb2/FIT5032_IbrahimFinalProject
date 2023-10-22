@@ -15,6 +15,11 @@ namespace FIT5032_IbrahimFinalProject.Models
     public class EmailsController : Controller
     {
         private readonly ClinicContext _context;
+        private string webRootPath;
+        private string uploadsPath;
+        private string fileExtension;
+        private string filePath;
+        private string fullPath;
 
         // Server.MapPath seems deprecated 
         // Answer found from https://stackoverflow.com/questions/49398965/what-is-the-equivalent-of-server-mappath-in-asp-net-core
@@ -67,17 +72,20 @@ namespace FIT5032_IbrahimFinalProject.Models
         public async Task<IActionResult> Create([Bind("ID,From,To,Subject,Content,Path,FileName")] Email email, IFormFile file)
         {
 
-            //ModelState.Clear();
+            // Save this file in order to upload. Idea came from someone having upload issues on forums
+
             var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
             email.Path = myUniqueFileName;
 
-            if (file.FileName != null)
-            {
-                string webRootPath = _webHostEnvironment.WebRootPath;
-                string uploadsPath = Path.Combine(webRootPath, "uploads");
+            Boolean doesAttachmentExist = file.FileName != null;
 
-                string fileExtension = Path.GetExtension(file.FileName);
-                string filePath = email.Path + fileExtension;
+            if (doesAttachmentExist)
+            {
+                webRootPath = _webHostEnvironment.WebRootPath;
+                uploadsPath = Path.Combine(webRootPath, "uploads");
+
+                fileExtension = Path.GetExtension(file.FileName);
+                filePath = email.Path + fileExtension;
 
                 email.Path = filePath;
 
@@ -86,9 +94,11 @@ namespace FIT5032_IbrahimFinalProject.Models
                     Directory.CreateDirectory(uploadsPath);
                 }
 
+                fullPath = Path.Combine(uploadsPath, filePath);
+
 
                 // Code adapted from https://stackoverflow.com/questions/73720188/how-to-save-files-to-another-folder-in-asp-net-core
-                using (var fs = new FileStream(Path.Combine(uploadsPath, filePath), FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (var fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
                     file.CopyToAsync(fs);
                 }
@@ -98,24 +108,43 @@ namespace FIT5032_IbrahimFinalProject.Models
                 //db.SaveChanges();
                 //return RedirectToAction("Index");
             }
-            // Sendgrid emailing, default from there github repo https://github.com/sendgrid/sendgrid-csharp
-            //var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-            //var client = new SendGridClient(apiKey);
-            //var msg = new SendGridMessage()
-            //{
-            //    From = new EmailAddress("test@example.com", "DX Team"),
-            //    Subject = "Sending with Twilio SendGrid is Fun",
-            //    PlainTextContent = "and easy to do anywhere, even with C#",
-            //    HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
-            //};
-            //msg.AddTo(new EmailAddress("test@example.com", "Test User"));
-            //var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
-            if (ModelState.IsValid)
+
+            // Sendgrid emailing, default from there github repo https://github.com/sendgrid/sendgrid-csharp
+            // This will actually send out the email
+            // As sendgrid does not allow unverified senders to send emails the suggestion from 
+            // https://stackoverflow.com/questions/68399298/sendgrid-mail-wont-allow-sending-from-to-be-dynamically 
+            // will be used to work around this issue
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("iibr0003@student.monash.edu", "uMRI Verified Sender"),
+                Subject = email.Subject,
+                PlainTextContent = email.Content,
+            };
+            if (doesAttachmentExist && fullPath != null) {
+                // How to convert to bytes https://stackoverflow.com/questions/25919387/converting-file-into-base64string-and-back-again
+                // File error fixed with https://stackoverflow.com/questions/60927331/controllerbase-filebyte-string-is-a-method-which-is-not-valid-in-the-giv
+                byte[] bytes = System.IO.File.ReadAllBytes(fullPath);
+                var fileBase64 = Convert.ToBase64String(bytes);
+                msg.AddAttachment(filename: fullPath, base64Content: fileBase64, type: file.ContentType);
+            }
+            // This value is hardcoded for the mail address of the clinic.
+            // In this case it is just my personal email
+            msg.AddReplyTo( new EmailAddress(email.From, User.Identity.Name));
+            msg.AddTo(new EmailAddress("ibbs824@gmail.com", "uMRI Team"));
+            var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+
+
+            ModelState.Clear();
+            email.To = "ibbs824@gmail.com";
+
+            if (ModelState.IsValid && response.IsSuccessStatusCode)
             {
                 _context.Add(email);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Home/Index");
             }
             return View(email);
         }
