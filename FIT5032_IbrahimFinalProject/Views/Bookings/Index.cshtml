@@ -12,25 +12,25 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.BookingDate)
             </th>
             @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Customer)
                 </th>
             }
             @if (User.Identity.IsAuthenticated)
             {
-                <th>Create, edit, delete</th>
+                <th scope="col">Create, edit, delete</th>
             }
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr scope="row">
                 <td>
                     @Html.DisplayFor(modelItem => item.BookingDate)
                 </td>

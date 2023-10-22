@@ -19,17 +19,17 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
+        <tr >
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.RatingScore)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Message)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Location)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Customer)
             </th>
             <th></th>
@@ -38,7 +38,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr scope="row">
                 <td>
                     @Html.DisplayFor(modelItem => item.RatingScore)
                 </td>
