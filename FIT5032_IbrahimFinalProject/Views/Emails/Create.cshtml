@@ -11,53 +11,46 @@
 
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Emails", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            @Html.AntiForgeryToken()
+@*         {@using (Html.BeginForm("Create", "Emails", FormMethod.Post, new { enctype = "multipart/form-data" }))}
+ *@            <form id="Form1" method="post" EncType="multipart/form-data">
+                @Html.AntiForgeryToken()
 
-
-            <div class="form-horizontal">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="From" class="control-label"></label>
-                    <input asp-for="From" class="form-control" />
-                    <span asp-validation-for="From" class="text-danger"></span>
-                </div>
-@*                 <div class="form-group">
-                    <label asp-for="To" class="control-label"></label>
-                    <input asp-for="To" class="form-control" />
-                    <span asp-validation-for="To" class="text-danger"></span>
-                </div> *@
-                <div class="form-group">
-                    <label asp-for="Subject" class="control-label"></label>
-                    <input asp-for="Subject" class="form-control" />
-                    <span asp-validation-for="Subject" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <textarea rows="10" asp-for="Content" class="form-control"> </textarea>
-                    <span asp-validation-for="Content" class="text-danger"></span>
-                </div>
-@*                 <div class="form-group">
-                    <label asp-for="FileName" class="control-label"></label>
-                    <input asp-for="FileName" class="form-control" />
-                    <span asp-validation-for="FileName" class="text-danger"></span>
-                </div> *@
-                <div class="form-group">
-                    <label asp-for="FileName" class="control-label col-md-2">Upload File</label>
-                    <div class="col-md-10">
-                        <input type="file" asp-for="Path" name="postedFile" accept="image/png,image/gif,image/jpeg,application/pdf" class="btn btn-default" />
+                <div class="form-horizontal">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="From" class="control-label"></label>
+                        <input asp-for="From" class="form-control" />
+                        <span asp-validation-for="From" class="text-danger"></span>
                     </div>
-                    <span asp-validation-for="Path" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="Subject" class="control-label"></label>
+                        <input asp-for="Subject" class="form-control" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Content" class="control-label"></label>
+                        <textarea rows="10" asp-for="Content" class="form-control"> </textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    @Html.HiddenFor(model => model.To, htmlAttributes: new { @class = "form-control"})
+                    <div class="form-group">
+                        <label asp-for="FileName" class="control-label">Upload File</label>
+                        <div class="col-md-10">
+                            <input type="file" asp-for="Path" name="file" accept="image/png,image/gif,image/jpeg,application/pdf" class="btn btn-default" />
+                        </div>
+                        <span asp-validation-for="Path" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Send" class="btn btn-primary" />
-                </div>
-            </div>
-        </div>
-    </div>
+            </form>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 
     @section Scripts {

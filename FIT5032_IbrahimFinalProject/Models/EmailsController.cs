@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,9 +16,15 @@ namespace FIT5032_IbrahimFinalProject.Models
     {
         private readonly ClinicContext _context;
 
-        public EmailsController(ClinicContext context)
+        // Server.MapPath seems deprecated 
+        // Answer found from https://stackoverflow.com/questions/49398965/what-is-the-equivalent-of-server-mappath-in-asp-net-core
+        // Related code referenes the above plus microsoft documentation
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public EmailsController(ClinicContext context, IWebHostEnvironment webHostingEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostingEnvironment;
         }
 
         // GET: Emails
@@ -57,37 +64,52 @@ namespace FIT5032_IbrahimFinalProject.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,From,To,Subject,Content,Path,FileName")] Email email)
+        public async Task<IActionResult> Create([Bind("ID,From,To,Subject,Content,Path,FileName")] Email email, IFormFile file)
         {
 
-            // File upload 
-            //ModelState.Clear(); 
-            //var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid()); 
-            //image.Path = myUniqueFileName; 
-            //TryValidateModel(image); 
-            //if (ModelState.IsValid) { 
-            //    string serverPath = Server.MapPath("~/Uploads/"); 
-            //    string fileExtension = Path.GetExtension(postedFile.FileName); 
-            //    string filePath = image.Path + fileExtension; 
-            //    image.Path = filePath; 
-            //    postedFile.SaveAs(serverPath + image.Path); 
-            //    db.Images.Add(image); 
-            //    db.SaveChanges(); 
-            //    return RedirectToAction("Index"); 
-            //}
+            //ModelState.Clear();
+            var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
+            email.Path = myUniqueFileName;
 
-            // Sendgrid emailing, defalt from there github repo https://github.com/sendgrid/sendgrid-csharp
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-            var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
+            if (file.FileName != null)
             {
-                From = new EmailAddress("test@example.com", "DX Team"),
-                Subject = "Sending with Twilio SendGrid is Fun",
-                PlainTextContent = "and easy to do anywhere, even with C#",
-                HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
-            };
-            msg.AddTo(new EmailAddress("test@example.com", "Test User"));
-            var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                string uploadsPath = Path.Combine(webRootPath, "uploads");
+
+                string fileExtension = Path.GetExtension(file.FileName);
+                string filePath = email.Path + fileExtension;
+
+                email.Path = filePath;
+
+                if (!Directory.Exists(uploadsPath))
+                {
+                    Directory.CreateDirectory(uploadsPath);
+                }
+
+
+                // Code adapted from https://stackoverflow.com/questions/73720188/how-to-save-files-to-another-folder-in-asp-net-core
+                using (var fs = new FileStream(Path.Combine(uploadsPath, filePath), FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                {
+                    file.CopyToAsync(fs);
+                }
+
+                //postedFile.SaveAs(serverPath + image.Path);
+                //db.Images.Add(image);
+                //db.SaveChanges();
+                //return RedirectToAction("Index");
+            }
+            // Sendgrid emailing, default from there github repo https://github.com/sendgrid/sendgrid-csharp
+            //var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            //var client = new SendGridClient(apiKey);
+            //var msg = new SendGridMessage()
+            //{
+            //    From = new EmailAddress("test@example.com", "DX Team"),
+            //    Subject = "Sending with Twilio SendGrid is Fun",
+            //    PlainTextContent = "and easy to do anywhere, even with C#",
+            //    HtmlContent = "<strong>and easy to do anywhere, even with C#</strong>"
+            //};
+            //msg.AddTo(new EmailAddress("test@example.com", "Test User"));
+            //var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
 
             if (ModelState.IsValid)
             {
